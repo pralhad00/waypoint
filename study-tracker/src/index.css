@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+/* PRD section 7 — calm muted dark theme only. No pure black, no neon. */
+@theme {
+  --color-bg: #1a1c23;
+  --color-surface: #22252e;
+  --color-raised: #2a2e39;
+  --color-border: #343847;
+  --color-text: #e3e1dc;
+  --color-muted: #9a9ca8;
+
+  --color-js: #d2b27a;
+  --color-react: #7fa7c9;
+  --color-p1: #a393c9;
+  --color-p2: #c79aa3;
+  --color-apps: #8fb39b;
+
+  --color-ahead: #8fb39b;
+  --color-ontrack: #7fa7c9;
+  --color-behind: #cf9a7e;
+
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+/* Simple base rules. Keep calm, soft, warm. */
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  margin: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
