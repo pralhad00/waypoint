@@ -13,7 +13,7 @@ export default function Topics() {
   return (
     <div>
       <h2 className="text-[28px] font-semibold mb-4">Topics</h2>
-      <div className="flex flex-col gap-2">
+      <div className="grid grid-cols-1 nav:grid-cols-2 gap-2">
         {topics.map((t) => (
           <Link
             key={t.id}

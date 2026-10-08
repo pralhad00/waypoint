@@ -77,7 +77,7 @@ export default function Dashboard() {
         </p>
       </div>
 
-      <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="mt-6 grid grid-cols-1 nav:grid-cols-2 lg:grid-cols-3 gap-4">
         {phases.map((p) => (
           <TopicCard key={p.id} phase={p} settings={settings} />
         ))}

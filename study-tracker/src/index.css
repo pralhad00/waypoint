@@ -21,6 +21,9 @@
 
   --font-sans: "Inter", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Custom breakpoint: below 700px the top nav shows icons only. */
+  --breakpoint-nav: 700px;
 }
 
 /* Simple base rules. Keep calm, soft, warm. */

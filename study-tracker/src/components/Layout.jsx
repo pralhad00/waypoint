@@ -1,15 +1,13 @@
-// Main layout: sidebar left, content centred, max 1100px.
+// Main layout: sticky top nav, content full width below with padding.
 import { Outlet } from 'react-router-dom'
-import Sidebar from './Sidebar.jsx'
+import TopNav from './TopNav.jsx'
 
 export default function Layout() {
   return (
-    <div className="min-h-screen bg-bg text-text flex">
-      <Sidebar />
-      <main className="flex-1 px-8 py-8">
-        <div className="max-w-[1100px] mx-auto">
-          <Outlet />
-        </div>
+    <div className="min-h-screen bg-bg text-text">
+      <TopNav />
+      <main className="px-4 nav:px-6 lg:px-8 py-6 nav:py-8">
+        <Outlet />
       </main>
     </div>
   )

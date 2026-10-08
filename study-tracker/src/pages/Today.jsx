@@ -151,7 +151,7 @@ export default function Today() {
 
   return (
     <div>
-      <div className="flex items-start justify-between">
+      <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <h2 className="text-[28px] font-semibold">
             Today · {format(new Date(), 'EEE, MMM d')}
