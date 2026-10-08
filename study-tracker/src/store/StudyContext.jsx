@@ -154,6 +154,15 @@ function reducer(state, action) {
     case 'UPDATE_SETTINGS': {
       return { ...state, settings: { ...state.settings, ...action.patch } }
     }
+    case 'UPDATE_PHASE': {
+      // Edit phase name or start/end dates (Settings page).
+      return {
+        ...state,
+        phases: state.phases.map((p) =>
+          p.id === action.phaseId ? { ...p, ...action.patch } : p,
+        ),
+      }
+    }
     case 'ADD_REST_DAY': {
       if (state.settings.restDays.includes(action.date)) return state
       return {

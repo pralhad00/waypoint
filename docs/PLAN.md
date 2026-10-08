@@ -43,49 +43,49 @@ Data model delta (applies from Job 3 onward):
   Test: `/topic/js` → check `Objects 1.5h` → bar moves instantly. Uncheck → undo toast. Locked 50h shows “Already completed”.
   Commit: `feat: topic detail checklist weighted progress`
 
-- [ ] Job 5 — Dashboard (first usable version)
+- [x] Job 5 — Dashboard (first usable version)
   Goal: Header days-left + overall %, 5 cards (dot/%/bar/x-y/hours/dates/chip), Today preview, mini strip. Apps chip uses calendar progress.
   Files: `src/pages/Dashboard.jsx`, `src/components/TopicCard.jsx`, `src/components/StatusChip.jsx`
   Test: `/` shows 5 bars, JS ~70% at start.
   Commit: `feat: dashboard with 5 progress cards`
 
-- [ ] Job 6 — Pure utils + sample tests
+- [x] Job 6 — Pure utils + sample tests
   Goal: `progress/schedule/status` pure functions, no UI. Apps excluded from budget calc. Snoozed skipped. Calendar-status for apps.
   Files: `src/utils/progress.js`, `src/utils/schedule.js`, `src/utils/status.js`
   Test: Sample dates: JS Oct9-15 minus 1 rest, 2.5h/day → finish date correct. Snoozed item skipped today. Apps status = days elapsed %.
   Commit: `feat: pure scheduling progress status utils`
 
-- [ ] Job 7 — Wire dates + status chips
+- [x] Job 7 — Wire dates + status chips
   Goal: Projected finish, Ahead/On-track/Behind ±5pt, `Needs X h/day`, late warning.
   Files: edits to `TopicCard.jsx`, `TopicPage.jsx`, `Dashboard.jsx`
   Test: Change dates → chip flips correctly with sage/blue/terracotta.
   Commit: `feat: status chips projected finish needs-per-day`
 
-- [ ] Job 8 — Today view (most important)
+- [x] Job 8 — Today view (most important)
   Goal: Ring done/budget (excl. apps), Up-next one task with Start (=in-progress) + Mark done, Rest-of-today fits budget, Carried-over calm, Not-today sets snoozedUntil, Take-today-off, empty state, separate optional Applications section below.
   Files: `src/pages/Today.jsx`, `src/components/UpNextCard.jsx`
   Test: `/today` → one Up-next. Start highlights. Not today → disappears until next study day. Apps below do not affect ring.
   Commit: `feat: today view up-next carried-over`
 
-- [ ] Job 9 — Rest days + rescheduling
+- [x] Job 9 — Rest days + rescheduling
   Goal: Single/range rest, auto-shift, plain message `JS now finishes Oct 18 (3 days late)`, miss warning + fix suggestion.
   Files: `src/components/RestDayPicker.jsx`, edits to `schedule.js`, `Today.jsx`
   Test: Add rest → finish +1 study day, warning if past end.
   Commit: `feat: rest days rescheduling impact message`
 
-- [ ] Job 10 — Timeline view
+- [x] Job 10 — Timeline view
   Goal: Bars Oct9-Dec7, fill by progress, today line, rest shading, Dec7 flag, hollow late marker.
   Files: `src/pages/Timeline.jsx`, `src/components/TimelineBar.jsx`
   Test: `/timeline` shows 5 bars + today + rest + flag + late hollow.
   Commit: `feat: timeline today rest deadline late markers`
 
-- [ ] Job 11 — Settings + backup
+- [x] Job 11 — Settings + backup
   Goal: Edit dailyHours/deadline/phases/rest, Export/Import JSON (for deploy move), Reset with confirm.
   Files: `src/pages/Settings.jsx`
   Test: Change 2.5→3 → Today fits more. Export downloads, Import restores. Reset confirms.
   Commit: `feat: settings export import reset`
 
-- [ ] Job 12 — Polish
+- [x] Job 12 — Polish
   Goal: 150-250ms hovers, 600ms bar, tick+dim, empty states, prefers-reduced-motion. No confetti.
   Files: CSS + `ProgressBar.jsx`, `TaskRow.jsx` tweaks
   Test: Check → tick draws, bar slides. Reduced-motion → no anim.

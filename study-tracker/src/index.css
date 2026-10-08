@@ -32,6 +32,37 @@ body {
   margin: 0;
 }
 
+/* Calm 200ms hovers everywhere (PRD motion: 150-250ms ease). */
+button,
+a,
+summary {
+  transition:
+    background-color 200ms ease,
+    color 200ms ease,
+    opacity 200ms ease;
+}
+
+/* Visible keyboard focus, dusty blue. */
+:focus-visible {
+  outline: 2px solid var(--color-ontrack);
+  outline-offset: 2px;
+}
+
+/* Checkbox tick draws in on complete. No confetti. */
+@keyframes tick-draw {
+  from {
+    stroke-dashoffset: 14;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.task-tick {
+  stroke-dasharray: 14;
+  animation: tick-draw 200ms ease;
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation: none !important;

@@ -2,19 +2,14 @@
 // Progress = checked hours / total hours. Bar updates on every toggle.
 // Unchecking shows a small undo toast. Projected finish comes in Job 7.
 import { useMemo, useRef, useState } from 'react'
+import { differenceInCalendarDays, format, parseISO } from 'date-fns'
 import { Link, useParams } from 'react-router-dom'
 import ProgressBar from '../components/ProgressBar.jsx'
+import StatusChip from '../components/StatusChip.jsx'
 import TaskRow from '../components/TaskRow.jsx'
+import { COLOR_HEX } from '../utils/colors.js'
 import { useStudy } from '../store/StudyContext.jsx'
-
-// Topic colours from PRD section 7. Inline style avoids Tailwind purge issues.
-export const COLOR_HEX = {
-  js: '#d2b27a',
-  react: '#7fa7c9',
-  p1: '#a393c9',
-  p2: '#c79aa3',
-  apps: '#8fb39b',
-}
+import { phaseStatus } from '../utils/status.js'
 
 export default function TopicPage() {
   const { id } = useParams()
@@ -69,6 +64,10 @@ export default function TopicPage() {
   }
 
   const colorHex = COLOR_HEX[phase.color] || '#7fa7c9'
+  const st = phaseStatus(phase, state.settings)
+  const lateDays = st.projected
+    ? differenceInCalendarDays(parseISO(st.projected), parseISO(phase.end))
+    : 0
 
   const showUndo = (itemId) => {
     setUndo({ phaseId: phase.id, itemId })
@@ -151,7 +150,32 @@ export default function TopicPage() {
         <p className="mt-2 text-[13px] text-muted">
           {stats.done}h done · {stats.left}h left
         </p>
+        <div className="mt-3 flex flex-wrap items-center gap-2">
+          <StatusChip status={st.status} />
+          {stats.left > 0 && (
+            <span className="text-[12px] text-muted">
+              Needs {st.needs.toFixed(1)} h/day to finish on time
+            </span>
+          )}
+        </div>
+        {st.projected && !st.isLate && (
+          <p className="mt-1 font-mono text-[12px] text-muted">
+            Projected finish {format(parseISO(st.projected), 'MMM d')}
+          </p>
+        )}
+        {st.isLate && (
+          <p className="mt-1 text-[12px]" style={{ color: '#cf9a7e' }}>
+            {phase.name} now finishes {format(parseISO(st.projected), 'MMM d')}{' '}
+            ({lateDays} days late) — raise daily hours or cut scope
+          </p>
+        )}
       </div>
+
+      {groups.length === 0 && (
+        <p className="mt-6 text-[14px] text-muted">
+          No tasks here yet. Add the first one below.
+        </p>
+      )}
 
       {groups.map((g) => (
         <section key={g.module} className="mt-6">

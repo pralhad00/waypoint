@@ -144,6 +144,7 @@ export default function TaskRow({
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
+                className="task-tick"
               />
             </svg>
           )}
