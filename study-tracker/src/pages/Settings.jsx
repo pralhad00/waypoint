@@ -138,7 +138,7 @@ export default function Settings() {
             </p>
           ) : (
             <p className="mt-1 text-[12px] text-muted">
-              Today queue and needs-per-day use this.
+              Today's hour budget and projected finishes use this.
             </p>
           )}
         </Section>
@@ -202,7 +202,7 @@ export default function Settings() {
             ))}
           </div>
           <p className="mt-2 text-[12px] text-muted">
-            Status chips, Today queue and timeline follow these dates.
+            Status chips, projected finishes and the timeline follow these dates.
           </p>
         </Section>
 

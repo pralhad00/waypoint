@@ -1,26 +1,28 @@
 // Dashboard (home): first usable version.
 // Header: days left until deadline + overall hours-weighted progress.
-// 5 cards, Today preview (first unchecked task), mini timeline strip.
-// Status chips are placeholders until Job 7. No scheduling math here.
+// 5 cards, Today card (your picks for today), mini timeline strip.
+// No scheduling math here — plans come from the todayPlans storage.
 import { differenceInCalendarDays, parseISO } from 'date-fns'
+import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import ProgressBar from '../components/ProgressBar.jsx'
 import TopicCard from '../components/TopicCard.jsx'
 import { COLOR_HEX } from '../utils/colors.js'
 import { useStudy } from '../store/StudyContext.jsx'
-
-function nextTask(phases) {
-  const ordered = [...phases].sort((a, b) => a.start.localeCompare(b.start))
-  for (const p of ordered) {
-    const item = p.items.find((i) => !i.done && !i.locked)
-    if (item) return { phase: p, item }
-  }
-  return null
-}
+import { useTodayPlans } from '../hooks/useTodayPlans.js'
+import { todayKey } from '../utils/schedule.js'
+import { planHours, resolveEntry } from '../utils/todayPlans.js'
 
 export default function Dashboard() {
   const { state } = useStudy()
   const { phases, settings } = state
+  const [plans] = useTodayPlans()
+
+  const phasesById = useMemo(() => new Map(phases.map((p) => [p.id, p])), [phases])
+  const picks = useMemo(
+    () => (plans[todayKey()] || []).map((e) => resolveEntry(e, phasesById)).filter(Boolean),
+    [plans, phasesById],
+  )
 
   const total = phases.reduce(
     (s, p) => s + p.items.reduce((a, i) => a + i.hours, 0),
@@ -33,7 +35,7 @@ export default function Dashboard() {
   const percent = total === 0 ? 0 : (done / total) * 100
 
   const daysLeft = differenceInCalendarDays(parseISO(settings.deadline), new Date())
-  const upNext = nextTask(phases)
+  const plannedHours = planHours(picks)
 
   // Mini strip: position each phase between the earliest start and deadline.
   const rangeStart = phases.reduce(
@@ -90,15 +92,17 @@ export default function Dashboard() {
             Open Today →
           </Link>
         </div>
-        {upNext ? (
+        {picks.length > 0 ? (
           <p className="text-[14px]">
-            Next: <span className="font-medium">{upNext.item.title}</span>{' '}
+            <span className="font-medium">
+              {picks.length} {picks.length === 1 ? 'task' : 'tasks'}
+            </span>{' '}
             <span className="font-mono text-[12px] text-muted">
-              {upNext.item.hours}h · {upNext.phase.name}
+              {plannedHours}h planned
             </span>
           </p>
         ) : (
-          <p className="text-[14px]">Nothing left today. Nice.</p>
+          <p className="text-[14px]">Nothing planned yet — choose your tasks.</p>
         )}
       </div>
 
